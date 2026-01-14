@@ -50,9 +50,38 @@ app.get('/health', async (req, res) => {
 });
 
 // Routes API
-// Importez et utilisez vos routes ici
-// const recipeRoutes = require('./routes/recipeRoutes');
-// app.use('/api/recipes', recipeRoutes);
+const adminRoutes = require('./routes/adminRoutes');
+const allergieRoutes = require('./routes/allergieRoutes');
+const categorieRoutes = require('./routes/categorieRoutes');
+const clientRoutes = require('./routes/clientRoutes');
+const conseilSanteRoutes = require('./routes/conseilSanteRoutes');
+const elementRecetteRoutes = require('./routes/elementRecetteRoutes');
+const etapeRoutes = require('./routes/etapeRoutes');
+const favoriRoutes = require('./routes/favoriRoutes');
+const ingredientRoutes = require('./routes/ingredientRoutes');
+const listeCourseRoutes = require('./routes/listeCourseRoutes');
+const notationRoutes = require('./routes/notationRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+const recetteRoutes = require('./routes/recetteRoutes');
+const sessionRoutes = require('./routes/sessionRoutes');
+const utilisateurRoutes = require('./routes/utilisateurRoutes');
+
+app.use('/api/admin', adminRoutes);
+app.use('/api/allergies', allergieRoutes);
+app.use('/api/categories', categorieRoutes);
+app.use('/api/clients', clientRoutes);
+app.use('/api/conseils-sante', conseilSanteRoutes);
+app.use('/api/elements-recette', elementRecetteRoutes);
+app.use('/api/etapes', etapeRoutes);
+app.use('/api/favoris', favoriRoutes);
+app.use('/api/ingredients', ingredientRoutes);
+app.use('/api/liste-course', listeCourseRoutes);
+app.use('/api/notations', notationRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/recettes', recetteRoutes);
+app.use('/api/recipes', recetteRoutes);
+app.use('/api/sessions', sessionRoutes);
+app.use('/api/utilisateurs', utilisateurRoutes);
 
 // ============================================
 // CONNEXION AUX BASES DE DONNÉES

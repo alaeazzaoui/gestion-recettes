@@ -1,10 +1,5 @@
-// ============================================
-// Contrôleur des Recettes avec Redis
-// ============================================
-
 const recipeService = require('../recipe-service');
-// Importez votre modèle Recipe ici
-// const Recipe = require('../models/Recipe');
+const Recette = require('../models/Recette');
 
 /**
  * Récupérer une recette par ID
@@ -14,11 +9,7 @@ const getRecipeById = async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Remplacez Recipe par votre modèle
-    // const recipe = await recipeService.getRecipeById(id, Recipe);
-    
-    // Pour le moment, exemple sans modèle :
-    const recipe = await recipeService.getRecipeById(id, YourRecipeModel);
+    const recipe = await recipeService.getRecipeById(id, Recette);
     
     if (!recipe) {
       return res.status(404).json({ 
@@ -56,7 +47,7 @@ const getAllRecipes = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
 
-    const result = await recipeService.getAllRecipes(page, limit, YourRecipeModel);
+    const result = await recipeService.getAllRecipes(page, limit, Recette);
 
     res.json({
       success: true,
@@ -80,7 +71,7 @@ const getPopularRecipes = async (req, res) => {
   try {
     const count = parseInt(req.query.count) || 10;
 
-    const recipes = await recipeService.getPopularRecipes(count, YourRecipeModel);
+    const recipes = await recipeService.getPopularRecipes(count, Recette);
 
     res.json({
       success: true,
@@ -111,7 +102,7 @@ const searchRecipes = async (req, res) => {
       });
     }
 
-    const recipes = await recipeService.searchRecipes(query, YourRecipeModel);
+    const recipes = await recipeService.searchRecipes(query, Recette);
 
     res.json({
       success: true,
@@ -138,7 +129,7 @@ const filterRecipes = async (req, res) => {
 
     const recipes = await recipeService.filterRecipes(
       { categories, regimes }, 
-      YourRecipeModel
+      Recette
     );
 
     res.json({
@@ -163,7 +154,7 @@ const createRecipe = async (req, res) => {
   try {
     const recipeData = req.body;
 
-    const recipe = await recipeService.createRecipe(recipeData, YourRecipeModel);
+    const recipe = await recipeService.createRecipe(recipeData, Recette);
 
     res.status(201).json({
       success: true,
@@ -189,7 +180,7 @@ const updateRecipe = async (req, res) => {
     const { id } = req.params;
     const recipeData = req.body;
 
-    const recipe = await recipeService.updateRecipe(id, recipeData, YourRecipeModel);
+    const recipe = await recipeService.updateRecipe(id, recipeData, Recette);
 
     if (!recipe) {
       return res.status(404).json({ 
@@ -221,7 +212,7 @@ const deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await recipeService.deleteRecipe(id, YourRecipeModel);
+    await recipeService.deleteRecipe(id, Recette);
 
     res.json({
       success: true,

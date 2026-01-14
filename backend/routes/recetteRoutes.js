@@ -12,37 +12,9 @@ const {
   updateRecipe,
   deleteRecipe,
   getRecipeViews
-} = require('../controllers/recipeController');
+} = require('../controllers/recetteController');
 
 // Routes publiques (sans authentification)
-
-/**
- * @route   GET /api/recipes/popular
- * @desc    Récupérer les recettes les plus populaires (depuis Redis)
- * @access  Public
- */
-router.get('/popular', getPopularRecipes);
-
-/**
- * @route   GET /api/recipes/search
- * @desc    Rechercher des recettes
- * @access  Public
- */
-router.get('/search', searchRecipes);
-
-/**
- * @route   GET /api/recipes/:id
- * @desc    Récupérer une recette par ID
- * @access  Public
- */
-router.get('/:id', getRecipeById);
-
-/**
- * @route   GET /api/recipes/:id/views
- * @desc    Récupérer le nombre de vues d'une recette
- * @access  Public
- */
-router.get('/:id/views', getRecipeViews);
 
 /**
  * @route   GET /api/recipes
@@ -52,11 +24,40 @@ router.get('/:id/views', getRecipeViews);
 router.get('/', getAllRecipes);
 
 /**
+ * @route   GET /api/recipes/popular
+ * @desc    Récupérer les recettes les plus populaires (depuis Redis)
+ * @access  Public
+ */
+router.get('/popular', getPopularRecipes);
+
+/**
+ * @route   GET /api/recipes/populaires
+ * @desc    Récupérer les recettes les plus populaires (version française)
+ * @access  Public
+ */
+
+router.get('/search', searchRecipes);
+
+/**
  * @route   POST /api/recipes/filter
  * @desc    Filtrer les recettes par catégories et régimes
  * @access  Public
  */
 router.post('/filter', filterRecipes);
+
+/**
+ * @route   GET /api/recipes/:id/views
+ * @desc    Récupérer le nombre de vues d'une recette
+ * @access  Public
+ */
+router.get('/:id/views', getRecipeViews);
+
+/**
+ * @route   GET /api/recipes/:id
+ * @desc    Récupérer une recette par ID
+ * @access  Public
+ */
+router.get('/:id', getRecipeById);
 
 // Routes protégées (nécessitent une authentification)
 // Ajoutez votre middleware d'authentification si nécessaire
