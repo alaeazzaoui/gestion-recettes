@@ -1,39 +1,44 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const authRoutes = require('./routes/Auth');
-const recipeRoutes = require('./routes/Recipes');
+require('dotenv').config();
 
 const app = express();
 
-// Middleware
+// Middlewares globaux
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/recipes', recipeRoutes);
+// Connexion à MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('✅ Connecté à MongoDB'))
+.catch(err => console.error('❌ Erreur de connexion MongoDB:', err));
+
+// Import des routes
+const routes = require('./routes');
+
+// Routes principales
+app.use("/api", routes);
 
 // Route de test
 app.get('/', (req, res) => {
-  res.json({ message: 'API de gestion de recettes - Backend fonctionnel ✅' });
+  res.json({ message: 'API Gestion des Recettes' });
 });
 
-// Connexion à MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('✅ Connecté à MongoDB');
-    
-    // Démarrer le serveur
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`🚀 Serveur démarré sur le port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error('❌ Erreur de connexion à MongoDB:', error);
-  });
+// Gestion des erreurs 404
+const { notFound, errorHandler } = require('./middleware/errorHandler');
+app.use(notFound);
 
-module.exports = app;
+// Gestion globale des erreurs
+app.use(errorHandler);
+
+// Démarrage du serveur
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Serveur démarré sur le port ${PORT}`);
+});
